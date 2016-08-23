@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Alias="Self" Provider="Devart.Data.Oracle" ProviderManifestToken="ORA" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Company" EntityType="Model.Store.Company" store:Type="Tables" Schema="SCOTT" />
+    <EntitySet Name="Order Details" EntityType="Model.Store.Order Details" store:Type="Tables" Schema="SCOTT" />
+    <EntitySet Name="Orders" EntityType="Model.Store.Orders" store:Type="Tables" Schema="SCOTT" />
+    <EntitySet Name="PersonContact" EntityType="Model.Store.PersonContact" store:Type="Tables" Schema="SCOTT" />
+    <EntitySet Name="ProductCategories" EntityType="Model.Store.ProductCategories" store:Type="Tables" Schema="SCOTT" />
+    <EntitySet Name="Products" EntityType="Model.Store.Products" store:Type="Tables" Schema="SCOTT" />
+    <AssociationSet Name="1" Association="Model.Store.1">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="11" Association="Model.Store.11">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="12" Association="Model.Store.12">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="PersonContact" EntitySet="PersonContact" />
+    </AssociationSet>
+    <AssociationSet Name="13" Association="Model.Store.13">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order Details" EntitySet="Order Details" />
+    </AssociationSet>
+    <AssociationSet Name="14" Association="Model.Store.14">
+      <End Role="PersonContact" EntitySet="PersonContact" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="15" Association="Model.Store.15">
+      <End Role="PersonContact" EntitySet="PersonContact" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="16" Association="Model.Store.16">
+      <End Role="ProductCategories" EntitySet="ProductCategories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="17" Association="Model.Store.17">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order Details" EntitySet="Order Details" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="int64" Nullable="false" />
+    <Property Name="CompanyName" Type="VARCHAR2" Nullable="false" MaxLength="40" />
+    <Property Name="PrimaryContact" Type="int64" />
+    <Property Name="Web" Type="VARCHAR2" MaxLength="100" />
+    <Property Name="Email" Type="VARCHAR2" MaxLength="50" />
+    <Property Name="AddressTitle" Type="VARCHAR2" MaxLength="120" />
+    <Property Name="Address" Type="VARCHAR2" MaxLength="60" />
+    <Property Name="City" Type="VARCHAR2" MaxLength="30" />
+    <Property Name="Region" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="PostalCode" Type="VARCHAR2" MaxLength="15" />
+    <Property Name="Country" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="Phone" Type="VARCHAR2" MaxLength="25" />
+    <Property Name="Fax" Type="VARCHAR2" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Order Details">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="OrderID" Type="int64" Nullable="false" />
+    <Property Name="ProductID" Type="int64" Nullable="false" />
+    <Property Name="Price" Type="double" />
+    <Property Name="Quantity" Type="double" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int64" Nullable="false" />
+    <Property Name="CompanyID" Type="int64" />
+    <Property Name="ContactID" Type="int64" />
+    <Property Name="OrderDate" Type="DATE" Nullable="false" />
+    <Property Name="Freight" Type="double" />
+    <Property Name="ShipDate" Type="DATE" />
+    <Property Name="ShipCompanyID" Type="int64" />
+    <Property Name="Discount" Type="double" />
+  </EntityType>
+  <EntityType Name="PersonContact">
+    <Key>
+      <PropertyRef Name="ContactID" />
+    </Key>
+    <Property Name="ContactID" Type="int64" Nullable="false" />
+    <Property Name="Title" Type="VARCHAR2" MaxLength="8" />
+    <Property Name="FirstName" Type="VARCHAR2" MaxLength="50" />
+    <Property Name="MiddleName" Type="VARCHAR2" MaxLength="50" />
+    <Property Name="LastName" Type="VARCHAR2" MaxLength="50" />
+    <Property Name="CompanyID" Type="int64" />
+    <Property Name="HomePhone" Type="VARCHAR2" MaxLength="25" />
+    <Property Name="MobilePhone" Type="VARCHAR2" MaxLength="25" />
+    <Property Name="AddressTitle" Type="VARCHAR2" MaxLength="120" />
+    <Property Name="Address" Type="VARCHAR2" MaxLength="60" />
+    <Property Name="City" Type="VARCHAR2" MaxLength="30" />
+    <Property Name="Region" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="PostalCode" Type="VARCHAR2" MaxLength="15" />
+    <Property Name="Country" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="Phone" Type="VARCHAR2" MaxLength="25" />
+    <Property Name="Fax" Type="VARCHAR2" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="ProductCategories">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="int64" Nullable="false" />
+    <Property Name="CategoryName" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="ParentCategory" Type="int64" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int64" Nullable="false" />
+    <Property Name="ProductName" Type="VARCHAR2" Nullable="false" MaxLength="50" />
+    <Property Name="CategoryID" Type="int64" />
+    <Property Name="UnitName" Type="VARCHAR2" MaxLength="20" />
+    <Property Name="UnitScale" Type="int" />
+    <Property Name="InStock" Type="int64" />
+    <Property Name="Price" Type="double" />
+    <Property Name="DiscontinuedPrice" Type="double" />
+  </EntityType>
+  <Association Name="1">
+    <End Role="Company" Type="Model.Store.Company" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="11">
+    <End Role="Company" Type="Model.Store.Company" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ShipCompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="12">
+    <End Role="Company" Type="Model.Store.Company" Multiplicity="0..1" />
+    <End Role="PersonContact" Type="Model.Store.PersonContact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="PersonContact">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="13">
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="1" />
+    <End Role="Order Details" Type="Model.Store.Order Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="Order Details">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="14">
+    <End Role="PersonContact" Type="Model.Store.PersonContact" Multiplicity="0..1" />
+    <End Role="Company" Type="Model.Store.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonContact">
+        <PropertyRef Name="ContactID" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="PrimaryContact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="15">
+    <End Role="PersonContact" Type="Model.Store.PersonContact" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonContact">
+        <PropertyRef Name="ContactID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ContactID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="16">
+    <End Role="ProductCategories" Type="Model.Store.ProductCategories" Multiplicity="0..1" />
+    <End Role="Products" Type="Model.Store.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="17">
+    <End Role="Products" Type="Model.Store.Products" Multiplicity="1" />
+    <End Role="Order Details" Type="Model.Store.Order Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Order Details">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

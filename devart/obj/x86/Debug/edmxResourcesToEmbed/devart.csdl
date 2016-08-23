@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="CrmDemoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Company" EntityType="Model.Company" />
+    <EntitySet Name="Order_Details" EntityType="Model.Order_Details" />
+    <EntitySet Name="Orders" EntityType="Model.Orders" />
+    <EntitySet Name="PersonContact" EntityType="Model.PersonContact" />
+    <EntitySet Name="ProductCategories" EntityType="Model.ProductCategories" />
+    <EntitySet Name="Products" EntityType="Model.Products" />
+    <AssociationSet Name="C1" Association="Model.C1">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="C11" Association="Model.C11">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="C12" Association="Model.C12">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="PersonContact" EntitySet="PersonContact" />
+    </AssociationSet>
+    <AssociationSet Name="C14" Association="Model.C14">
+      <End Role="PersonContact" EntitySet="PersonContact" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
+    <AssociationSet Name="C13" Association="Model.C13">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="C17" Association="Model.C17">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Order_Details" EntitySet="Order_Details" />
+    </AssociationSet>
+    <AssociationSet Name="C15" Association="Model.C15">
+      <End Role="PersonContact" EntitySet="PersonContact" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="C16" Association="Model.C16">
+      <End Role="ProductCategories" EntitySet="ProductCategories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="Int64" Nullable="false" />
+    <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="40" Unicode="true" FixedLength="false" />
+    <Property Name="PrimaryContact" Type="Int64" />
+    <Property Name="Web" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="AddressTitle" Type="String" MaxLength="120" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Region" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="Fax" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Orders" Relationship="Model.C1" FromRole="Company" ToRole="Orders" />
+    <NavigationProperty Name="Orders1" Relationship="Model.C11" FromRole="Company" ToRole="Orders" />
+    <NavigationProperty Name="PersonContact" Relationship="Model.C12" FromRole="Company" ToRole="PersonContact" />
+    <NavigationProperty Name="PersonContact1" Relationship="Model.C14" FromRole="Company" ToRole="PersonContact" />
+  </EntityType>
+  <EntityType Name="Order_Details">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="OrderID" Type="Int64" Nullable="false" />
+    <Property Name="ProductID" Type="Int64" Nullable="false" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="Quantity" Type="Double" />
+    <NavigationProperty Name="Orders" Relationship="Model.C13" FromRole="Order_Details" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="Model.C17" FromRole="Order_Details" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int64" Nullable="false" />
+    <Property Name="CompanyID" Type="Int64" />
+    <Property Name="ContactID" Type="Int64" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" />
+    <Property Name="Freight" Type="Double" />
+    <Property Name="ShipDate" Type="DateTime" />
+    <Property Name="ShipCompanyID" Type="Int64" />
+    <Property Name="Discount" Type="Double" />
+    <NavigationProperty Name="Company" Relationship="Model.C1" FromRole="Orders" ToRole="Company" />
+    <NavigationProperty Name="Company1" Relationship="Model.C11" FromRole="Orders" ToRole="Company" />
+    <NavigationProperty Name="Order_Details" Relationship="Model.C13" FromRole="Orders" ToRole="Order_Details" />
+    <NavigationProperty Name="PersonContact" Relationship="Model.C15" FromRole="Orders" ToRole="PersonContact" />
+  </EntityType>
+  <EntityType Name="PersonContact">
+    <Key>
+      <PropertyRef Name="ContactID" />
+    </Key>
+    <Property Name="ContactID" Type="Int64" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="8" Unicode="true" FixedLength="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CompanyID" Type="Int64" />
+    <Property Name="HomePhone" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="MobilePhone" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="AddressTitle" Type="String" MaxLength="120" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="60" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+    <Property Name="Region" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <Property Name="Fax" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Company" Relationship="Model.C12" FromRole="PersonContact" ToRole="Company" />
+    <NavigationProperty Name="Company1" Relationship="Model.C14" FromRole="PersonContact" ToRole="Company" />
+    <NavigationProperty Name="Orders" Relationship="Model.C15" FromRole="PersonContact" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="ProductCategories">
+    <Key>
+      <PropertyRef Name="CategoryID" />
+    </Key>
+    <Property Name="CategoryID" Type="Int64" Nullable="false" />
+    <Property Name="CategoryName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="ParentCategory" Type="Int64" />
+    <NavigationProperty Name="Products" Relationship="Model.C16" FromRole="ProductCategories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="Int64" Nullable="false" />
+    <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CategoryID" Type="Int64" />
+    <Property Name="UnitName" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+    <Property Name="UnitScale" Type="Int32" />
+    <Property Name="InStock" Type="Int64" />
+    <Property Name="Price" Type="Double" />
+    <Property Name="DiscontinuedPrice" Type="Double" />
+    <NavigationProperty Name="Order_Details" Relationship="Model.C17" FromRole="Products" ToRole="Order_Details" />
+    <NavigationProperty Name="ProductCategories" Relationship="Model.C16" FromRole="Products" ToRole="ProductCategories" />
+  </EntityType>
+  <Association Name="C1">
+    <End Role="Company" Type="Model.Company" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C11">
+    <End Role="Company" Type="Model.Company" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ShipCompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C12">
+    <End Role="Company" Type="Model.Company" Multiplicity="0..1" />
+    <End Role="PersonContact" Type="Model.PersonContact" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="PersonContact">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C14">
+    <End Role="PersonContact" Type="Model.PersonContact" Multiplicity="0..1" />
+    <End Role="Company" Type="Model.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonContact">
+        <PropertyRef Name="ContactID" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="PrimaryContact" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C13">
+    <End Role="Orders" Type="Model.Orders" Multiplicity="1" />
+    <End Role="Order_Details" Type="Model.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C17">
+    <End Role="Products" Type="Model.Products" Multiplicity="1" />
+    <End Role="Order_Details" Type="Model.Order_Details" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Order_Details">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C15">
+    <End Role="PersonContact" Type="Model.PersonContact" Multiplicity="0..1" />
+    <End Role="Orders" Type="Model.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PersonContact">
+        <PropertyRef Name="ContactID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ContactID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="C16">
+    <End Role="ProductCategories" Type="Model.ProductCategories" Multiplicity="0..1" />
+    <End Role="Products" Type="Model.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategories">
+        <PropertyRef Name="CategoryID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
